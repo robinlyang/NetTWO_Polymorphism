@@ -41,7 +41,7 @@ namespace NetTWO_Polymorphism
             double overtime_pay = 0.0;
             double total_pay = 0.0;
             int total_hours = this.hours_worked;
-            if(total_hours > 40)
+            if(total_hours >= 40)
             {
                 regular_hours = total_hours - 40;
                 overtime_hours = total_hours - regular_hours;
@@ -49,10 +49,10 @@ namespace NetTWO_Polymorphism
                 overtime_pay = overtime_hours * this.pay_rate * 1.5;
                 total_pay = regular_pay + overtime_pay;
             }
-            else
+            if(total_hours <= 39)
             {
                 regular_hours = total_hours;
-                total_pay = regular_pay * this.pay_rate;
+                total_pay = regular_hours * this.pay_rate;
             }
             net_pay = total_pay - Get_Tax(total_pay);
             return net_pay;
