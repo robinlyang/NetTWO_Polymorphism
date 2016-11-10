@@ -27,15 +27,34 @@ namespace NetTWO_Polymorphism
 
         }
 
-        public void Print_Pay()
+        public string Print_Pay()
         {
-            //call Get_Pay
+            return Get_Pay().ToString("$#,#00.00");
         }
 
-        public double Get_Pay()
+        public virtual double Get_Pay()
         {
             double net_pay = 0.0;
-
+            int regular_hours = 0;
+            int overtime_hours = 0;
+            double regular_pay = 0.0;
+            double overtime_pay = 0.0;
+            double total_pay = 0.0;
+            int total_hours = this.hours_worked;
+            if(total_hours > 40)
+            {
+                regular_hours = total_hours - 40;
+                overtime_hours = total_hours - regular_hours;
+                regular_pay = regular_hours * this.pay_rate;
+                overtime_pay = overtime_hours * this.pay_rate * 1.5;
+                total_pay = regular_pay + overtime_pay;
+            }
+            else
+            {
+                regular_hours = total_hours;
+                total_pay = regular_pay * this.pay_rate;
+            }
+            net_pay = total_pay - Get_Tax(total_pay);
             return net_pay;
         }
 
